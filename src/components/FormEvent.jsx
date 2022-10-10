@@ -18,6 +18,7 @@ const FormEvent = ({
           value={evento}
           onChange={(e) => setEvento(e.target.value)}
           required
+          autoFocus
         />
       </div>
       <div className="mb-3">

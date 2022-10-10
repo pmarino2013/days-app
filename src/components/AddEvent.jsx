@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import FormEvent from "./FormEvent";
 
 const AddEvent = () => {
@@ -30,18 +31,34 @@ const AddEvent = () => {
       label,
     };
 
+    let hoy = moment().format();
+    let fechaEvent = moment(datos.fecha);
+
+    let diferencia = fechaEvent.diff(hoy, "days");
+
+    console.log(diferencia);
+    if (diferencia <= 0) {
+      setMensaje("Fecha inferior a la fecha actual");
+      return setTimeout(() => {
+        setMensaje("");
+      }, 3000);
+    }
+
     if (label.length > 0) {
       setEventos([...eventos, datos]);
       limpiarForm();
+      setMensaje("Evento agregado con éxito");
     } else {
       setMensaje("Falta elegir un label");
     }
+    setTimeout(() => {
+      setMensaje("");
+    }, 3000);
   };
 
   const limpiarForm = () => {
     setEvento("");
     setFecha("");
-    setLabel("");
   };
 
   // const mostrarLabel = (color) => {
@@ -67,7 +84,12 @@ const AddEvent = () => {
       </div>
       {mensaje.length !== 0 && (
         <div className="mt-3">
-          <div className="alert alert-danger" role="alert">
+          <div
+            className={
+              label.length > 0 ? "alert alert-info" : "alert alert-danger"
+            }
+            role="alert"
+          >
             {mensaje}
           </div>
         </div>

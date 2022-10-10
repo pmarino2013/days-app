@@ -5,7 +5,7 @@ const AddScreen = () => {
   return (
     <div className="container">
       <div className="row mt-5">
-        <div className="col">
+        <div className="col-12 col-md-6 offset-md-3">
           <h1>Crea tu evento nuevo</h1>
         </div>
       </div>

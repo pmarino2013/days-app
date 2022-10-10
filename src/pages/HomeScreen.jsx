@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import CardEvents from "../components/CardEvents";
+import BtnEventFail from "../components/BtnEventFail";
 
 const HomeScreen = () => {
   const [eventos, setEventos] = useState([]);
   const [eventList, setEventList] = useState([]);
+
+  const [fails, setFails] = useState(false);
 
   useEffect(() => {
     setEventos(JSON.parse(localStorage.getItem("eventos")) || []);
@@ -13,13 +16,24 @@ const HomeScreen = () => {
 
   useEffect(() => {
     let dias = calcularDias();
-    setEventList(dias);
-  }, [eventos]);
+    let diasHabiles = [];
+    if (fails) {
+      diasHabiles = dias.filter((dia) => {
+        return dia.dias <= 0;
+      });
+    } else {
+      diasHabiles = dias.filter((dia) => {
+        return dia.dias > 0;
+      });
+    }
+    setEventList([...diasHabiles]);
+  }, [eventos, fails]);
 
   const calcularDias = () => {
     let fecha1 = moment().format();
     const eventosCalculados = eventos.map((item) => {
       let fecha2 = moment(item.fecha);
+
       let diferencia = fecha2.diff(fecha1, "days");
 
       return {
@@ -46,8 +60,11 @@ const HomeScreen = () => {
   return (
     <div className="container">
       <div className="row mt-5">
-        <div className="col">
-          <h1>Tus eventos</h1>
+        <div className="col-12 col-md-6 offset-md-3">
+          <div className="d-flex justify-content-between">
+            <h1>Tus eventos {fails ? "Fallidos" : "Activos"}</h1>
+            <BtnEventFail setFails={setFails} fails={fails} />
+          </div>
           <div className="d-grid">
             <Link to="/add" className="btn btn-primary">
               Nuevo evento
