@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import CardEvents from "../components/CardEvents";
 
 const HomeScreen = () => {
   const [eventos, setEventos] = useState([]);
@@ -8,11 +9,11 @@ const HomeScreen = () => {
 
   useEffect(() => {
     setEventos(JSON.parse(localStorage.getItem("eventos")) || []);
-    // setEventList(calcularDias());
   }, []);
 
   useEffect(() => {
-    setEventList(calcularDias());
+    let dias = calcularDias();
+    setEventList(dias);
   }, [eventos]);
 
   const calcularDias = () => {
@@ -22,28 +23,24 @@ const HomeScreen = () => {
       let diferencia = fecha2.diff(fecha1, "days");
 
       return {
+        id: item.id,
         evento: item.evento,
         dias: diferencia,
         label: item.label,
       };
     });
 
-    return eventosCalculados;
+    return eventosCalculados.sort((a, b) => a.dias - b.dias);
   };
 
-  const definirColor = (color) => {
-    switch (color) {
-      case "azul":
-        return "card card-azul";
-      case "verde":
-        return "card card-verde";
-      case "rojo":
-        return "card card-rojo";
-      case "morado":
-        return "card card-morado";
-      case "amarillo":
-        return "card card-amarillo";
-    }
+  const borrarEvento = (indice) => {
+    const nuevoArray = [...eventos];
+    const index = nuevoArray.findIndex((evento) => {
+      return evento.id === indice;
+    });
+    nuevoArray.splice(index, 1);
+    setEventos([...nuevoArray]);
+    localStorage.setItem("eventos", JSON.stringify(nuevoArray));
   };
 
   return (
@@ -58,18 +55,7 @@ const HomeScreen = () => {
           </div>
         </div>
       </div>
-      <div className="row row-cols-1">
-        {eventList.map((item, index) => (
-          <div className="col my-2" key={index}>
-            <div className={`card card-${item.label}`}>
-              <div className="card-body">
-                <p className="m-0">{item.evento.toUpperCase()}</p>
-                <span>Faltan {item.dias} días</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <CardEvents borrarEvento={borrarEvento} eventList={eventList} />
     </div>
   );
 };
