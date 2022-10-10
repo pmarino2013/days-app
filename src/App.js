@@ -1,10 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
+
 import "./App.css";
-import AddScreen from "./pages/AddScreen";
+
+import RoutesApp from "./routes/RoutesApp";
 
 function App() {
-  return <AddScreen />;
+  return <RoutesApp />;
 }
 
 export default App;

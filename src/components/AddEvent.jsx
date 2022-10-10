@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 const AddEvent = () => {
-  const [eventos, setEventos] = useState([]);
+  const [eventos, setEventos] = useState(
+    JSON.parse(localStorage.getItem("eventos")) || []
+  );
   const [evento, setEvento] = useState("");
   const [fecha, setFecha] = useState("");
   const [label, setLabel] = useState("");
   const [mensaje, setMensaje] = useState("");
-
-  useEffect(() => {
-    setEventos(JSON.parse(localStorage.getItem("eventos")) || []);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("eventos", JSON.stringify(eventos));
@@ -62,14 +60,46 @@ const AddEvent = () => {
         </div>
         <label>Labels</label>
         <div className="d-flex gap-2">
-          <div className="box item1" onClick={() => setLabel("azul")}></div>
-          <div className="box item2" onClick={() => setLabel("verde")}></div>
-          <div className="box item3" onClick={() => setLabel("rojo")}></div>
-          <div className="box item4" onClick={() => setLabel("morado")}></div>
-          <div className="box item5" onClick={() => setLabel("amarillo")}></div>
+          <div>
+            <button
+              className="box item1"
+              onClick={() => setLabel("azul")}
+              type="button"
+            ></button>
+          </div>
+          <div>
+            <button
+              className="box item2"
+              onClick={() => setLabel("verde")}
+              type="button"
+            ></button>
+          </div>
+          <div>
+            <button
+              className="box item3"
+              onClick={() => setLabel("rojo")}
+              type="button"
+            ></button>
+          </div>
+          <div>
+            <button
+              className="box item4"
+              onClick={() => setLabel("morado")}
+              type="button"
+            ></button>
+          </div>
+          <div>
+            <button
+              className="box item5"
+              onClick={() => setLabel("amarillo")}
+              type="button"
+            ></button>
+          </div>
         </div>
         <div className="d-grid mt-5">
-          <button className="btn btn-dark">Agregar</button>
+          <button type="submit" className="btn btn-dark">
+            Agregar
+          </button>
         </div>
       </form>
       {mensaje === 0 && (

@@ -21,19 +21,54 @@ code {
   border: 1px solid #6c8ebf;
   background-color: #dae8fc;
 }
+.item1:focus {
+  border-radius: 100%;
+}
 .item2 {
   border: 1px solid #82b366;
   background-color: #d5e8d4;
+}
+.item2:focus {
+  border-radius: 100%;
 }
 .item3 {
   border: 1px solid #b85450;
   background-color: #f8cecc;
 }
+.item3:focus {
+  border-radius: 100%;
+}
 .item4 {
   border: 1px solid #9673a6;
   background-color: #e1d5e7;
 }
+.item4:focus {
+  border-radius: 100%;
+}
 .item5 {
   border: 1px solid #d6b656;
+  background-color: #fff2cc;
+}
+.item5:focus {
+  border-radius: 100%;
+}
+
+.card-azul {
+  background-color: #dae8fc;
+}
+
+.card-verde {
+  background-color: #d5e8d4;
+}
+
+.card-rojo {
+  background-color: #f8cecc;
+}
+
+.card-morado {
+  background-color: #e1d5e7;
+}
+
+.card-amarillo {
   background-color: #fff2cc;
 }
