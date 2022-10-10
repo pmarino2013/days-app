@@ -41,7 +41,7 @@ const AddEvent = () => {
       setMensaje("Fecha inferior a la fecha actual");
       return setTimeout(() => {
         setMensaje("");
-      }, 3000);
+      }, 2000);
     }
 
     if (label.length > 0) {
@@ -53,7 +53,7 @@ const AddEvent = () => {
     }
     setTimeout(() => {
       setMensaje("");
-    }, 3000);
+    }, 2000);
   };
 
   const limpiarForm = () => {
