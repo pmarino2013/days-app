@@ -72,3 +72,14 @@ code {
 .card-amarillo {
   background-color: #fff2cc;
 }
+
+.img-notfound {
+  width: 100%;
+  object-fit: cover;
+}
+
+.fondo-home {
+  background-image: url("/src/assets/calendar.png");
+  background-size: cover;
+  background-position: center;
+}

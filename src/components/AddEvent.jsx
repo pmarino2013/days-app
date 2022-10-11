@@ -33,11 +33,11 @@ const AddEvent = () => {
 
     let hoy = moment().format();
     let fechaEvent = moment(datos.fecha);
-
+    // console.log(moment(datos.fecha).format());
     let diferencia = fechaEvent.diff(hoy, "days");
 
     console.log(diferencia);
-    if (diferencia <= 0) {
+    if (diferencia < 0) {
       setMensaje("Fecha inferior a la fecha actual");
       return setTimeout(() => {
         setMensaje("");

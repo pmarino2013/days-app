@@ -19,11 +19,11 @@ const HomeScreen = () => {
     let diasHabiles = [];
     if (fails) {
       diasHabiles = dias.filter((dia) => {
-        return dia.dias <= 0;
+        return dia.dias < 0;
       });
     } else {
       diasHabiles = dias.filter((dia) => {
-        return dia.dias > 0;
+        return dia.dias >= 0;
       });
     }
     setEventList([...diasHabiles]);
@@ -53,12 +53,13 @@ const HomeScreen = () => {
       return evento.id === indice;
     });
     nuevoArray.splice(index, 1);
+
     setEventos([...nuevoArray]);
     localStorage.setItem("eventos", JSON.stringify(nuevoArray));
   };
 
   return (
-    <div className="container">
+    <div className="container ">
       <div className="row mt-5">
         <div className="col-12 col-md-6 offset-md-3">
           <div className="d-flex justify-content-between">
@@ -67,7 +68,7 @@ const HomeScreen = () => {
           </div>
           <div className="d-grid">
             <Link to="/add" className="btn btn-primary">
-              Nuevo evento
+              <i className="fa fa-pencil" aria-hidden="true"></i> Nuevo evento
             </Link>
           </div>
         </div>
