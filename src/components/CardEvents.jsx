@@ -6,7 +6,7 @@ const CardEvents = ({ eventList, borrarEvento }) => {
     return (
       <div className="row mt-3">
         <div className="col-12 col-md-6 offset-md-3 animate__animated animate__fadeIn">
-          <h3 className="text-center">No hay eventos creados</h3>
+          <h3 className="text-center">No hay eventos a mostrar</h3>
           <img className="img-notfound" src={imagen} alt="not found" />
         </div>
       </div>
