@@ -1,80 +1,95 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import FormEvent from "./FormEvent";
 
 const AddEvent = () => {
-  const [eventos, setEventos] = useState([]);
+  const [eventos, setEventos] = useState(
+    JSON.parse(localStorage.getItem("eventos")) || []
+  );
   const [evento, setEvento] = useState("");
   const [fecha, setFecha] = useState("");
   const [label, setLabel] = useState("");
   const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    setEventos(JSON.parse(localStorage.getItem("eventos")) || []);
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem("eventos", JSON.stringify(eventos));
   }, [eventos]);
+
+  // useEffect(() => {
+  //   if (label.length > 0) {
+  //     mostrarLabel(label);
+  //   }
+  // }, [label]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const datos = {
+      id: new Date().getTime(),
       evento,
       fecha,
       label,
     };
 
+    let hoy = moment().format();
+    let fechaEvent = moment(datos.fecha);
+    // console.log(moment(datos.fecha).format());
+    let diferencia = fechaEvent.diff(hoy, "days");
+
+    console.log(diferencia);
+    if (diferencia < 0) {
+      setMensaje("Fecha inferior a la fecha actual");
+      return setTimeout(() => {
+        setMensaje("");
+      }, 2000);
+    }
+
     if (label.length > 0) {
       setEventos([...eventos, datos]);
       limpiarForm();
+      setMensaje("Evento agregado con éxito");
     } else {
       setMensaje("Falta elegir un label");
     }
+    setTimeout(() => {
+      setMensaje("");
+    }, 2000);
   };
 
   const limpiarForm = () => {
     setEvento("");
     setFecha("");
-    setLabel("");
-    setMensaje("");
   };
+
+  // const mostrarLabel = (color) => {
+  //   setMensaje(`Elegiste label ${color}`);
+  //   setTimeout(() => {
+  //     setMensaje("");
+  //   }, 3000);
+  // };
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label>Nombre del evento</label>
-          <input
-            className="form-control"
-            type="text"
-            value={evento}
-            onChange={(e) => setEvento(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label>Fecha del evento</label>
-          <input
-            className="form-control"
-            type="date"
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
-            required
-          />
-        </div>
-        <label>Labels</label>
-        <div className="d-flex gap-2">
-          <div className="box item1" onClick={() => setLabel("azul")}></div>
-          <div className="box item2" onClick={() => setLabel("verde")}></div>
-          <div className="box item3" onClick={() => setLabel("rojo")}></div>
-          <div className="box item4" onClick={() => setLabel("morado")}></div>
-          <div className="box item5" onClick={() => setLabel("amarillo")}></div>
-        </div>
-        <div className="d-grid mt-5">
-          <button className="btn btn-dark">Agregar</button>
-        </div>
-      </form>
-      {mensaje === 0 && (
+      <FormEvent
+        handleSubmit={handleSubmit}
+        evento={evento}
+        setEvento={setEvento}
+        fecha={fecha}
+        setFecha={setFecha}
+        setLabel={setLabel}
+      />
+      <div className="d-grid mt-3">
+        <Link to="/" className="btn btn-outline-primary">
+          Lista de eventos
+        </Link>
+      </div>
+      {mensaje.length !== 0 && (
         <div className="mt-3">
-          <div className="alert alert-danger" role="alert">
+          <div
+            className={
+              label.length > 0 ? "alert alert-info" : "alert alert-danger"
+            }
+            role="alert"
+          >
             {mensaje}
           </div>
         </div>
