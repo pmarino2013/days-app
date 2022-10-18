@@ -39,6 +39,7 @@ const HomeScreen = () => {
       return {
         id: item.id,
         evento: item.evento,
+        fecha: item.fecha,
         dias: diferencia,
         label: item.label,
       };

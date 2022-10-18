@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import imagen from "../assets/notfound.png";
 
 const CardEvents = ({ eventList, borrarEvento }) => {
@@ -19,6 +20,9 @@ const CardEvents = ({ eventList, borrarEvento }) => {
           <div className={`card card-${item.label}`}>
             <div className="card-body d-flex justify-content-between">
               <div>
+                <small className="text-muted">
+                  {moment(item.fecha).format("L")}
+                </small>
                 <p className="m-0">{item.evento.toUpperCase()}</p>
 
                 {item.dias < 0 ? (
